@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Hassle free Semantic Search on any webpage",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "jest",
     "start": "webpack serve --mode development",
