@@ -8,6 +8,7 @@ import { splitText } from './split_text';
  * @returns {Promise<void>} A promise that resolves to true if the model is successfully initialized, false otherwise.
  */
 export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' }) {
+    console.log(`init: ${modelConfig.modelName}`)
     await loadModel(modelConfig);
 }
 
@@ -18,6 +19,7 @@ export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' 
  * @returns {Promise<EmbeddingMap>} A promise that resolves to a mapping of embedded content.
  */
 export async function embedContent(content, config = { pooling: 'mean', normalize: true }) {
+    console.log(`embedContent: length ${content.length}`)
     const inputTexts = await splitText(content, { type: SplitType.Sentence });
     if (!inputTexts || inputTexts.length === 0) {
         return {};
@@ -33,6 +35,7 @@ export async function embedContent(content, config = { pooling: 'mean', normaliz
  * @returns {Promise<Array<SearchResult>>} A promise that resolves to an array of search results.
  */
 export async function search(query, embeddingMap, config = { pooling: 'mean', normalize: true }) {
+    console.log(`search: ${query}`)
     const queryEmbedding = await embed(query, config);
     return semanticSearch(embeddingMap, queryEmbedding, config);
 }

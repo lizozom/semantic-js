@@ -1,4 +1,4 @@
-const { calculateCosineSimilarity, getSimilarK } = require('../similarity');
+import { calculateCosineSimilarity, getSimilarK } from '../similarity';
 
 describe('utils', () => {
     describe('calculateCosineSimilarity', () => {

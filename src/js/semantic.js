@@ -5,7 +5,7 @@ import { IEmbedder } from "./types";
 /**
  * @type {Comlink.Remote<IEmbedder>}
  */
-const Embedder = Comlink.wrap(new Worker('worker.bundle.js'));
+const Embedder = Comlink.wrap(new Worker('worker.js'));
 
 /**
  * @type {typeof Embedder | null};

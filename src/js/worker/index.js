@@ -1,7 +1,9 @@
-import { Pipeline, pipeline } from '@xenova/transformers';
+import { env, Pipeline, pipeline } from '@xenova/transformers';
 import * as Comlink from 'comlink';
 import { getSimilarK } from './similarity';
 import { IEmbedder } from '../types';
+
+env.backends.onnx.wasm.numThreads = 8;
 
 /**
  * @type {Promise<Pipeline> | null}
@@ -18,6 +20,7 @@ class Embedder {
      */
     async loadModel(modelConfig) {
         const { modelName } = modelConfig;
+        console.log(`loadModel: ${modelName}`);
         embedderPromise = pipeline("embeddings", modelName);
         await embedderPromise;
     }
@@ -60,6 +63,7 @@ class Embedder {
      * @returns {Promise<Array<SearchResult>>}
      */
     async search(embeddingMap, queryEmbedding, searchConfig) {
+        console.log(`search: map length ${Object.keys(embeddingMap).length}`);
         return getSimilarK(embeddingMap, queryEmbedding, searchConfig)
     }
 }
