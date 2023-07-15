@@ -2,7 +2,7 @@
  * Configuration options for embedding content.
  * @typedef {Object} EmbeddingConfig
  * @property {boolean} normalize - Whether to normalize the embeddings. 
- * @property {string} language - The language of the content.
+ * @property {string} [language] - The language of the content.
  * @property {string} pooling - The pooling strategy for generating the embedding.
  */
 
