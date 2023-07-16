@@ -4,7 +4,11 @@ import { IEmbedder } from "./types";
 /**
  * @type {import("comlink").Remote<IEmbedder>}
  */
-const Embedder = wrap(new Worker('worker.js'));
+const Embedder = wrap(
+    new Worker(
+        /* webpackChunkName: "worker" */ new URL('./worker/index.js', import.meta.url)
+    )
+);
 
 /**
  * @type {typeof Embedder | null};
