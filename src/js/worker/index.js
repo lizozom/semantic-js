@@ -3,7 +3,7 @@ import * as Comlink from 'comlink';
 import { getSimilarK } from './similarity';
 import { IEmbedder } from '../types';
 
-env.backends.onnx.wasm.numThreads = 8;
+env.backends.onnx.wasm.numThreads = 4;
 
 /**
  * @type {Promise<Pipeline> | null}
@@ -50,8 +50,14 @@ class Embedder {
          * @type {EmbeddingMap}
          */
         const embeddingMap = {};
+        const promiseArr = [];
         for (const text of texts) {
-            embeddingMap[text] = await this.embed(text, embeddingConfig);
+            promiseArr.push(this.embed(text, embeddingConfig));
+        }
+        const resolved = await Promise.all(promiseArr)
+        for (let i = 0; i< resolved.length; i++) {
+            embeddingMap[texts[i]] = resolved[i];
+
         }
         return embeddingMap;
     }
