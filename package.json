@@ -1,12 +1,13 @@
 {
   "name": "@lizozom/semanticjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hassle free Semantic Search on any webpage",
-  "main": "index.js",
+  "main": "src/js/index.js",
   "scripts": {
     "test": "jest",
     "start": "webpack serve --mode development",
-    "build": "webpack"
+    "build": "webpack --mode production",
+    "build-dev": "webpack --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "html-webpack-plugin": "^5.5.3",
     "jest": "^29.6.1",
     "style-loader": "^3.3.3",
+    "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
