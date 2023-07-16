@@ -14,13 +14,16 @@ export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' 
 
 /**
  * Embed the content using the semantic model.
- * @param {string} content - The content to be embedded.
+ * If the content is an array, it will be embedded as is, if no it will be split to sentences.
+ * @param {string | Array<string>} content - The content to be embedded 
  * @param {EmbeddingConfig} config - The configuration object for embedding.
  * @returns {Promise<EmbeddingMap>} A promise that resolves to a mapping of embedded content.
  */
 export async function embedContent(content, config = { pooling: 'mean', normalize: true }) {
-    console.log(`embedContent: length ${content.length}`)
-    const inputTexts = await splitText(content, { type: SplitType.Sentence });
+    const isArray = Array.isArray(content);
+    console.log(`embedContent: type ${isArray ? 'array' : 'string'} of length ${content.length}`)
+    
+    let inputTexts = isArray ? content : await splitText(content, { type: SplitType.Sentence });
     if (!inputTexts || inputTexts.length === 0) {
         return {};
     }
