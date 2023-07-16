@@ -1,6 +1,6 @@
 # semantic-js
 
-###To run the demo page
+### To run the demo page
 
 `npm install`
 
