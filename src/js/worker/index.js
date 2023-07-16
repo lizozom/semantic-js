@@ -1,5 +1,5 @@
 import { env, Pipeline, pipeline } from '@xenova/transformers';
-import * as Comlink from 'comlink';
+import { expose } from 'comlink';
 import { getSimilarK } from './similarity';
 import { IEmbedder } from '../types';
 
@@ -74,4 +74,4 @@ class Embedder {
     }
 }
 
-Comlink.expose(Embedder);
+expose(Embedder);

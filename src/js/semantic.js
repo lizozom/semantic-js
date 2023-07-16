@@ -1,11 +1,10 @@
-import { Pipeline, pipeline } from "@xenova/transformers";
-import * as Comlink from "comlink";
+import { wrap } from "comlink";
 import { IEmbedder } from "./types";
 
 /**
- * @type {Comlink.Remote<IEmbedder>}
+ * @type {import("comlink").Remote<IEmbedder>}
  */
-const Embedder = Comlink.wrap(new Worker('worker.js'));
+const Embedder = wrap(new Worker('worker.js'));
 
 /**
  * @type {typeof Embedder | null};
