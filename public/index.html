@@ -9,20 +9,8 @@
 </head>
 
 <body>
-<br/>
-<h1 class="text-center"><span class="highlight-first">SemanticFinder</span></h1>
-<h2 class="text-center">Frontend-only live semantic search with <a href="https://xenova.github.io/transformers.js/"
-                                                                   target="_blank">transformers.js</a>. <a
-        href="https://github.com/do-me/SemanticFinder">GitHub</a></h2>
-<div class="text-center" style="margin: 0 auto; max-width: 65%;">
-    <p>
-        Semantic search right in your browser! Calculates the embeddings and cosine similarity client-side without
-        server-side inferencing, using a <a
-            href="https://github.com/xenova/transformers.js/issues/36#issuecomment-1476842324">quantized version</a>
-        of <a
-            href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2">sentence-transformers/all-MiniLM-L6-v2</a>.<br>
-    </p>
-</div>
+<h1 class="text-center">semantic-js demo</h1>
+
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -34,7 +22,6 @@
                             <div class="form-floating mb-3">
                                 <input type="text" id="query-text" class="form-control" placeholder="Enter query here"
                                        value="food"/>
-                                <label for="query-text">query</label>
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -42,53 +29,6 @@
                                     class="btn btn-primary btn-lg mb-2 form-control" disabled>
                                 Loading...
                             </button>
-                        </div>
-                        <!--  settings -->
-                        <div class="accordion accordion-flush pb-3" id="advancedFeaturesAccordion">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="advancedFeaturesHeader">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#advancedFeaturesContent" aria-expanded="false"
-                                            aria-controls="advancedFeaturesContent">
-                                        Settings ↠
-                                    </button>
-                                </h2>
-
-                                <div id="advancedFeaturesContent" class="accordion-collapse collapse">
-                                    <div class="accordion-body">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-floating mb-3">
-                                                        <input type="number" id="threshold" class="form-control w-100"
-                                                                value="0.3" step="0.01"/>
-                                                        <label for="threshold">similarity threshold</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-floating">
-                                                    <select class="form-select form-control " id="split-type">
-                                                        <option value="Sentence">Sentence</option>
-                                                        <option value="Chars" selected># Chars</option>
-                                                        <option value="Words"># Words</option>
-                                                        <option value="Tokens"># Tokens</option>
-                                                        <option value="Regex">Regex</option>
-                                                    </select>
-                                                    <label for="split-type">split by</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-floating mb-3">
-                                                        <input id="split-param" class="form-control w-100"
-                                                        type=number min="1" value="40"/>
-                                                        <label for="split-param"># Chars</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <!--  text box -->
