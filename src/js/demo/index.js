@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { init, embedContent, search } from '../index';
 
 /** @type {EmbeddingMap | undefined} */ 
@@ -8,10 +9,15 @@ function setupEventListeners () {
     const submitEl = document.getElementById('submit_button');
     submitEl?.addEventListener('click', async () => {
         const inputEl = document.getElementById('input-text');
-        // @ts-ignore
         const results = await search(inputEl.value, embeddingMap);
         console.log(results);
     })
+}
+
+function enableButton() {
+    const submitEl = document.getElementById('submit_button');
+    submitEl?.removeAttribute('disabled');
+    submitEl?.textContent = 'Search';
 }
 
 /**
@@ -19,6 +25,7 @@ function setupEventListeners () {
  */
 window.onload = async function () {
     await init();
+    enableButton();
 
     const inputEl = document.getElementById('input-text');
     // @ts-ignore
