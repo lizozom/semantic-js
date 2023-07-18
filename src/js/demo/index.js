@@ -24,8 +24,10 @@ function enableButton() {
  * Setup the application when the page loads.
  */
 window.onload = async function () {
+    console.log('demo onload');
     await init();
     enableButton();
+    setupEventListeners();
 
     const inputEl = document.getElementById('input-text');
     // @ts-ignore
@@ -35,5 +37,4 @@ window.onload = async function () {
     embeddingMap = await embedContent(content);
     console.log(`Took ${performance.now() - startTime} ms to embed ${content.length} characters`);
 
-    setupEventListeners();
 };
