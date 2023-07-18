@@ -7,7 +7,7 @@ let embeddingMap = undefined;
 // @ts-ignore
 function setupEventListeners () {
     const submitEl = document.getElementById('submit_button');
-    submitEl?.addEventListener('click', async () => {
+    submitEl.addEventListener('click', async () => {
         const inputEl = document.getElementById('input-text');
         const results = await search(inputEl.value, embeddingMap);
         console.log(results);
@@ -16,8 +16,8 @@ function setupEventListeners () {
 
 function enableButton() {
     const submitEl = document.getElementById('submit_button');
-    submitEl?.removeAttribute('disabled');
-    submitEl?.textContent = 'Search';
+    submitEl.removeAttribute('disabled');
+    submitEl.textContent = 'Search';
 }
 
 /**
