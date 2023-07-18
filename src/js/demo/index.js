@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { init, embedContent, search } from '../index';
+import { splitText } from './split_text';
 
 /** @type {EmbeddingMap | undefined} */ 
 let embeddingMap = undefined;
@@ -33,8 +34,9 @@ window.onload = async function () {
     // @ts-ignore
     const content = inputEl.value;
 
+    const splitContent = await splitText(content);
     const startTime = performance.now();
-    embeddingMap = await embedContent(content);
+    embeddingMap = await embedContent(splitContent);
     console.log(`Took ${performance.now() - startTime} ms to embed ${content.length} characters`);
 
 };

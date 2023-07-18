@@ -1,4 +1,4 @@
-import { embed, embedBatch, loadModel, semanticSearch } from './semantic';
+import { embed as embedWrapper, embedBatch, loadModel, semanticSearch } from './semantic';
 /**
  * Initialize the semantic model.
  * @param {ModelConfig} modelConfig - The configuration object for the model.
@@ -16,11 +16,24 @@ export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' 
  * @returns {Promise<EmbeddingVector>} A promise that resolves to a mapping of embedded content.
  */
 export async function embed(content, config = { pooling: 'mean', normalize: true }) {
-    const isArray = Array.isArray(content);
-    console.log(`embed: length ${content.length}`)
-    
-    return await embed(content, config);
+    console.log(`embed: length ${content.length}`)    
+    return await embedWrapper(content, config);
 }
+
+/**
+ * Embed the content using the semantic model.
+ * @param {Array<string>} content - The content to be embedded 
+ * @param {EmbeddingConfig} config - The configuration object for embedding.
+ * @returns {Promise<EmbeddingMap>} A promise that resolves to a mapping of embedded content.
+ */
+export async function embedContent(content, config = { pooling: 'mean', normalize: true }) {
+    const isArray = Array.isArray(content);
+    console.log(`embedContent: length ${content.length}`)
+    
+    return await embedBatch(content, config);
+}
+
+
 
 /**
  * Search for similar content using the semantic model.

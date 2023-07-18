@@ -37,7 +37,7 @@ module.exports = (_, argv) => {
         template: './public/index.html',
       })
     ],
-    optimization: {
+    optimization: isDevelopment ? undefined :{
       minimize: true,
       minimizer: [new TerserPlugin()],
     },
