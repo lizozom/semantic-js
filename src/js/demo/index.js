@@ -1,4 +1,18 @@
-import { init, embedContent } from '../index';
+import { init, embedContent, search } from '../index';
+
+/** @type {EmbeddingMap | undefined} */ 
+let embeddingMap = undefined;
+
+// @ts-ignore
+function setupEventListeners () {
+    const submitEl = document.getElementById('submit_button');
+    submitEl?.addEventListener('click', async () => {
+        const inputEl = document.getElementById('input-text');
+        // @ts-ignore
+        const results = await search(inputEl.value, embeddingMap);
+        console.log(results);
+    })
+}
 
 /**
  * Setup the application when the page loads.
@@ -11,6 +25,8 @@ window.onload = async function () {
     const content = inputEl.value;
 
     const startTime = performance.now();
-    const embeddingMap = await embedContent(content);
+    embeddingMap = await embedContent(content);
     console.log(`Took ${performance.now() - startTime} ms to embed ${content.length} characters`);
+
+    setupEventListeners();
 };
