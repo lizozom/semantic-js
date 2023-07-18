@@ -1,5 +1,5 @@
 import { wrap } from "comlink";
-import { IEmbedder } from "./types";
+import { IEmbedder } from "./iembedder";
 
 /**
  * @type {import("comlink").Remote<IEmbedder>}

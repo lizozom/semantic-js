@@ -1,7 +1,3 @@
-export const SplitType = {
-    Sentence: 'Sentence',
-};
-
 /**
  * @interface
  * @class

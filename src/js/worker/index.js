@@ -1,7 +1,7 @@
 import { env, Pipeline, pipeline } from '@xenova/transformers';
 import { expose } from 'comlink';
 import { getSimilarK } from './similarity';
-import { IEmbedder } from '../types';
+import { IEmbedder } from '../iembedder';
 
 env.backends.onnx.wasm.numThreads = 4;
 
@@ -37,7 +37,8 @@ class Embedder {
         }
         const { pooling, normalize } = embeddingConfig;
         const e0 = await embedder(text, { pooling, normalize });
-        return e0["data"];
+        const result = e0["data"];
+        return result;
     }
 
     /**

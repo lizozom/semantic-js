@@ -1,7 +1,4 @@
 import { embed, embedBatch, loadModel, semanticSearch } from './semantic';
-import { SplitType } from './types';
-import { splitText } from './split_text';
-
 /**
  * Initialize the semantic model.
  * @param {ModelConfig} modelConfig - The configuration object for the model.
@@ -14,20 +11,15 @@ export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' 
 
 /**
  * Embed the content using the semantic model.
- * If the content is an array, it will be embedded as is, if no it will be split to sentences.
- * @param {string | Array<string>} content - The content to be embedded 
+ * @param {string} content - The content to be embedded 
  * @param {EmbeddingConfig} config - The configuration object for embedding.
- * @returns {Promise<EmbeddingMap>} A promise that resolves to a mapping of embedded content.
+ * @returns {Promise<EmbeddingVector>} A promise that resolves to a mapping of embedded content.
  */
-export async function embedContent(content, config = { pooling: 'mean', normalize: true }) {
+export async function embed(content, config = { pooling: 'mean', normalize: true }) {
     const isArray = Array.isArray(content);
-    console.log(`embedContent: type ${isArray ? 'array' : 'string'} of length ${content.length}`)
+    console.log(`embed: length ${content.length}`)
     
-    let inputTexts = isArray ? content : await splitText(content, { type: SplitType.Sentence });
-    if (!inputTexts || inputTexts.length === 0) {
-        return {};
-    }
-    return embedBatch(inputTexts, config);
+    return await embed(content, config);
 }
 
 /**
