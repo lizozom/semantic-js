@@ -1,4 +1,4 @@
-import { env, Pipeline, pipeline } from '@xenova/transformers';
+import { AutoTokenizer, env, Pipeline, pipeline, PreTrainedTokenizer } from '@xenova/transformers';
 import { expose } from 'comlink';
 import { getSimilarK } from './similarity';
 import { IEmbedder } from '../iembedder';
@@ -6,9 +6,14 @@ import { IEmbedder } from '../iembedder';
 env.backends.onnx.wasm.numThreads = 4;
 
 /**
- * @type {Promise<Pipeline> | null}
+ * @type {Pipeline | null}
  */
-let embedderPromise = null;
+let embedder = null;
+
+/**
+ * @type {PreTrainedTokenizer | null}
+ */
+let tokenizer = null
 
 /**
  * @implements {IEmbedder}
@@ -19,10 +24,16 @@ class Embedder {
      * @returns {Promise<void>} 
      */
     async loadModel(modelConfig) {
-        const { modelName } = modelConfig;
+        const { modelName, progressCb } = modelConfig;
         console.log(`loadModel: ${modelName}`);
-        embedderPromise = pipeline("embeddings", modelName);
-        await embedderPromise;
+        embedder = await pipeline(
+            "feature-extraction", 
+            modelName,
+            {
+                progress_callback: progressCb
+            }
+        );
+        tokenizer = await AutoTokenizer.from_pretrained(modelName); // no progress callbacks -- assume its quick
     }
 
     /**
@@ -31,7 +42,6 @@ class Embedder {
      * @returns {Promise<EmbeddingVector>}
      */
     async embed(text, embeddingConfig) {
-        const embedder = await embedderPromise;
         if (!embedder) {
             throw new Error('Embedder not initialized');
         }
@@ -64,14 +74,26 @@ class Embedder {
     }
 
     /**
-     * @param {EmbeddingMap} embeddingMap 
+     * 
+     * @param {string} text 
+     * @returns {Promise<Array<string>>}
+     */
+    async tokenize(text) {
+        if (!tokenizer) {
+            throw new Error('Tokenizer not initialized');
+        }
+        return await tokenizer(text)["input_ids"]["data"];
+    }
+
+    /**
      * @param {EmbeddingVector} queryEmbedding 
+     * @param {EmbeddingMap} embeddingMap 
      * @param {SearchConfig} searchConfig 
      * @returns {Promise<Array<SearchResult>>}
      */
-    async search(embeddingMap, queryEmbedding, searchConfig) {
+    async search(queryEmbedding, embeddingMap, searchConfig) {
         console.log(`search: map length ${Object.keys(embeddingMap).length}`);
-        return getSimilarK(embeddingMap, queryEmbedding, searchConfig)
+        return getSimilarK(queryEmbedding, embeddingMap, searchConfig)
     }
 }
 

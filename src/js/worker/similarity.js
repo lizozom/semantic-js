@@ -20,12 +20,12 @@ export function calculateCosineSimilarity(queryEmbedding, embedding) {
 }
 
 /**
- * @param {EmbeddingMap} embeddingMap 
  * @param {EmbeddingVector} queryEmbedding 
+ * @param {EmbeddingMap} embeddingMap 
  * @param {SearchConfig} searchConfig 
  * @returns {Array<SearchResult>}
  */
-export function getSimilarK(embeddingMap, queryEmbedding, searchConfig ) {
+export function getSimilarK(queryEmbedding, embeddingMap, searchConfig = {} ) {
     /** @type Array<SearchResult> */
     const results = [];
     Object.keys(embeddingMap).forEach((key) => {

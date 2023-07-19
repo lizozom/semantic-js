@@ -1,12 +1,42 @@
-import { embed as embedWrapper, embedBatch, loadModel, semanticSearch } from './semantic';
+import { wrap } from 'comlink';
+import { IEmbedder } from './iembedder';
+
+
+/**
+ * @type {import("comlink").Remote<IEmbedder>}
+ */
+const Embedder = wrap(
+    new Worker(
+        /* webpackChunkName: "worker" */ new URL('./worker/index.js', import.meta.url)
+    )
+);
+
+/**
+ * @type {typeof Embedder | null};
+ */
+let embedder = null;
+
+
+/**
+ * @returns {typeof Embedder}
+ */
+export function getEmbedder() {
+    if (!embedder) {
+        throw new Error('Embedder not initialized');
+    }
+    return embedder;
+}
+
 /**
  * Initialize the semantic model.
  * @param {ModelConfig} modelConfig - The configuration object for the model.
  * @returns {Promise<void>} A promise that resolves to true if the model is successfully initialized, false otherwise.
  */
 export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' }) {
-    console.log(`init: ${modelConfig.modelName}`)
-    await loadModel(modelConfig);
+    console.log(`init: ${modelConfig.modelName}`);
+    // @ts-ignore
+    embedder =  await new Embedder();
+    await getEmbedder().loadModel(modelConfig);
 }
 
 /**
@@ -17,7 +47,7 @@ export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' 
  */
 export async function embed(content, config = { pooling: 'mean', normalize: true }) {
     console.log(`embed: length ${content.length}`)    
-    return await embedWrapper(content, config);
+    return getEmbedder().embed(content, config);
 }
 
 /**
@@ -27,13 +57,9 @@ export async function embed(content, config = { pooling: 'mean', normalize: true
  * @returns {Promise<EmbeddingMap>} A promise that resolves to a mapping of embedded content.
  */
 export async function embedContent(content, config = { pooling: 'mean', normalize: true }) {
-    const isArray = Array.isArray(content);
     console.log(`embedContent: length ${content.length}`)
-    
-    return await embedBatch(content, config);
+    return getEmbedder().embedBatch(content, config);
 }
-
-
 
 /**
  * Search for similar content using the semantic model.
@@ -45,5 +71,15 @@ export async function embedContent(content, config = { pooling: 'mean', normaliz
 export async function search(query, embeddingMap, config = { pooling: 'mean', normalize: true }) {
     console.log(`search: ${query}`)
     const queryEmbedding = await embed(query, config);
-    return semanticSearch(embeddingMap, queryEmbedding, config);
+    return getEmbedder().search(queryEmbedding, embeddingMap);
+}
+
+/**
+ * Tokenize the content using the semantic model.
+ * @param {string} text - The content to be tokenized
+ * @returns {Promise<Array<string>>} A promise that resolves to an array of tokens.
+ */
+export async function tokenize(text) {
+    console.log(`tokenize: ${text}`)
+    return getEmbedder().tokenize(text);
 }

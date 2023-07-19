@@ -50,7 +50,7 @@ describe('utils', () => {
                 const queryEmbedding = [0.6, 0.4, 0.7];
                 const searchConfig = { topK: 2 };
 
-                const results = getSimilarK(embeddingMap, queryEmbedding, searchConfig);
+                const results = getSimilarK(queryEmbedding, embeddingMap, searchConfig);
 
                 expect(results).toHaveLength(2);
                 expect(results[0].text).toBe('text2');
@@ -69,7 +69,7 @@ describe('utils', () => {
                 const queryEmbedding = [0.6, 0.4, 0.7];
                 const searchConfig = {};
 
-                const results = getSimilarK(embeddingMap, queryEmbedding, searchConfig);
+                const results = getSimilarK(queryEmbedding, embeddingMap, searchConfig);
 
                 expect(results).toHaveLength(4);
                 expect(results[0].text).toBe('text2');
@@ -86,7 +86,7 @@ describe('utils', () => {
                 const queryEmbedding = [0.6, 0.4, 0.7];
                 const searchConfig = { topK: 3 };
 
-                const results = getSimilarK(embeddingMap, queryEmbedding, searchConfig);
+                const results = getSimilarK(queryEmbedding, embeddingMap, searchConfig);
 
                 expect(results).toEqual([]);
             });
