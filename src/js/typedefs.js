@@ -10,7 +10,6 @@
  * Configuration options for the model.
  * @typedef {Object} ModelConfig
  * @property {string} modelName - The name of the model.
- * @property {function} [progressCb] - A callback function for the loading reporting progress.
  */
 
 /**
@@ -38,4 +37,14 @@
 /**
  * @typedef {Object} SearchConfig
  * @property {number} [topK] - The number of search results to return.
+ */
+
+/**
+ * @typedef {Object} LoadingProgress    
+ * @property {string} status
+ * @property {string} file
+ * @property {string} name
+ * @property {number} [loaded]
+ * @property {number} [progress]
+ * @property {number} [total]  
  */

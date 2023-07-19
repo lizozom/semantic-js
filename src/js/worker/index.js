@@ -21,19 +21,25 @@ let tokenizer = null
 class Embedder {
     /**
      * @param {ModelConfig} modelConfig - The configuration object for the model.
+     * @param {Function} [progressCb]
      * @returns {Promise<void>} 
      */
-    async loadModel(modelConfig) {
-        const { modelName, progressCb } = modelConfig;
+    async loadModel(modelConfig, progressCb) {
+        const { modelName } = modelConfig;
         console.log(`loadModel: ${modelName}`);
+        tokenizer = await AutoTokenizer.from_pretrained(modelName);
         embedder = await pipeline(
             "feature-extraction", 
             modelName,
             {
-                progress_callback: progressCb
+                progress_callback: (progress) => {
+                    if (progressCb) {
+                        progressCb(progress);
+                    }
+                    // console.log(`progress: ${progress}`)
+                }
             }
         );
-        tokenizer = await AutoTokenizer.from_pretrained(modelName); // no progress callbacks -- assume its quick
     }
 
     /**

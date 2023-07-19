@@ -26,7 +26,13 @@ function enableButton() {
  */
 window.onload = async function () {
     console.log('demo onload');
-    await init();
+    await init({
+        modelName: 'Xenova/all-MiniLM-L6-v2',
+    }, (progress) => {
+        if (progress.status === 'done') {
+            console.log(`Loaded ${progress.name} (${progress.file})`);
+        }
+    });
     enableButton();
     setupEventListeners();
 

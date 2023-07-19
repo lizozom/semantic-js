@@ -6,9 +6,10 @@ export class IEmbedder {
     /**
      * @abstract
      * @param {ModelConfig} modelConfig - The configuration object for the model.
+     * @param {Function} [progressCb]
      * @returns {Promise<void>}
      */
-    loadModel(modelConfig) {
+    loadModel(modelConfig, progressCb) {
         throw new Error('Not implemented');
     }
 

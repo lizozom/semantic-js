@@ -1,6 +1,5 @@
-import { wrap } from 'comlink';
+import { wrap, proxy } from 'comlink';
 import { IEmbedder } from './iembedder';
-
 
 /**
  * @type {import("comlink").Remote<IEmbedder>}
@@ -16,7 +15,6 @@ const Embedder = wrap(
  */
 let embedder = null;
 
-
 /**
  * @returns {typeof Embedder}
  */
@@ -30,13 +28,16 @@ export function getEmbedder() {
 /**
  * Initialize the semantic model.
  * @param {ModelConfig} modelConfig - The configuration object for the model.
+ * @param {Function} [progressCb]
  * @returns {Promise<void>} A promise that resolves to true if the model is successfully initialized, false otherwise.
  */
-export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' }) {
+export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' }, progressCb) {
     console.log(`init: ${modelConfig.modelName}`);
     // @ts-ignore
     embedder =  await new Embedder();
-    await getEmbedder().loadModel(modelConfig);
+    const proxiedProgressCb = progressCb ? proxy(progressCb) : undefined;
+        
+    await getEmbedder().loadModel(modelConfig, proxiedProgressCb);
 }
 
 /**
