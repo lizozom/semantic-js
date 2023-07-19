@@ -17,7 +17,7 @@ Checkout this repository and run the following commands:
 
 ### Usage Example
 
-```
+```js
 import { init, embed, search } from '@lizozom/semanticjs';
 
 window.load = () => {
