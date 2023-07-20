@@ -21,7 +21,7 @@ let tokenizer = null
 class Embedder {
     /**
      * @param {ModelConfig} modelConfig - The configuration object for the model.
-     * @param {Function} [progressCb]
+     * @param {LoadingProgressCallback} [progressCb]
      * @returns {Promise<void>} 
      */
     async loadModel(modelConfig, progressCb) {
@@ -32,11 +32,10 @@ class Embedder {
             "feature-extraction", 
             modelName,
             {
-                progress_callback: (progress) => {
+                progress_callback: (/** @type {LoadingProgress} */ progress) => {
                     if (progressCb) {
                         progressCb(progress);
                     }
-                    // console.log(`progress: ${progress}`)
                 }
             }
         );

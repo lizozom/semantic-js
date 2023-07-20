@@ -26,6 +26,7 @@ window.load = () => {
     });
 
     const pageContent = document.getElementById('main-text-cont').value;
+    // Split the content by sentences, tokens, etc. This logic is not included in this package.
     const splitContent = splitText(pageContent);
     const embeddingMap = await embedContent(splitContent);
     const searchResults = await search('search query', embeddingMap);

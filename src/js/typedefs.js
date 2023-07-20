@@ -48,3 +48,9 @@
  * @property {number} [progress]
  * @property {number} [total]  
  */
+
+/**
+ * @callback LoadingProgressCallback
+ * @param {LoadingProgress} progress
+ * @returns {void} * 
+ */
