@@ -1,7 +1,7 @@
 /**
  * Configuration options for embedding content.
  * @typedef {Object} EmbeddingConfig
- * @property {boolean} normalize - Whether to normalize the embeddings. 
+ * @property {boolean} normalize - Whether to normalize the embeddings.
  * @property {string} [language] - The language of the content.
  * @property {string} pooling - The pooling strategy for generating the embedding.
  */
@@ -40,17 +40,17 @@
  */
 
 /**
- * @typedef {Object} LoadingProgress    
+ * @typedef {Object} LoadingProgress
  * @property {string} status
  * @property {string} file
  * @property {string} name
  * @property {number} [loaded]
  * @property {number} [progress]
- * @property {number} [total]  
+ * @property {number} [total]
  */
 
 /**
  * @callback LoadingProgressCallback
  * @param {LoadingProgress} progress
- * @returns {void} * 
+ * @returns {void} *
  */

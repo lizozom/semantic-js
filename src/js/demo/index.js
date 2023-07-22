@@ -2,17 +2,17 @@
 import { init, embedContent, search } from '../index';
 import { splitText } from './split_text';
 
-/** @type {EmbeddingMap | undefined} */ 
-let embeddingMap = undefined;
+/** @type {EmbeddingMap | undefined} */
+let embeddingMap;
 
 // @ts-ignore
-function setupEventListeners () {
+function setupEventListeners() {
     const submitEl = document.getElementById('submit_button');
-    submitEl.addEventListener('click', async () => {
+    submitEl.addEventListener('click', async() => {
         const inputEl = document.getElementById('input-text');
         const results = await search(inputEl.value, embeddingMap);
         console.log(results);
-    })
+    });
 }
 
 function enableButton() {
@@ -24,10 +24,10 @@ function enableButton() {
 /**
  * Setup the application when the page loads.
  */
-window.onload = async function () {
+window.onload = async function() {
     console.log('demo onload');
     await init({
-        modelName: 'Xenova/all-MiniLM-L6-v2',
+        modelName: 'Xenova/all-MiniLM-L6-v2'
     }, (progress) => {
         if (progress.status === 'done') {
             console.log(`Loaded ${progress.name} (${progress.file})`);
@@ -44,5 +44,4 @@ window.onload = async function () {
     const startTime = performance.now();
     embeddingMap = await embedContent(splitContent);
     console.log(`Took ${performance.now() - startTime} ms to embed ${content.length} characters`);
-
 };

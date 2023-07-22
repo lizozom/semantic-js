@@ -38,14 +38,13 @@ describe('utils', () => {
             expect(result).toBeNaN();
         });
 
-
         describe('getSimilarK', () => {
             test('should return the top K similar results sorted by score', () => {
                 const embeddingMap = {
-                    'text1': [0.5, 0.3, 0.8],
-                    'text2': [0.65, 0.4, 0.7],
-                    'text3': [0.4, 0.6, 0.2],
-                    'text4': [0.1, 0.9, 0.5]
+                    text1: [0.5, 0.3, 0.8],
+                    text2: [0.65, 0.4, 0.7],
+                    text3: [0.4, 0.6, 0.2],
+                    text4: [0.1, 0.9, 0.5]
                 };
                 const queryEmbedding = [0.6, 0.4, 0.7];
                 const searchConfig = { topK: 2 };
@@ -61,10 +60,10 @@ describe('utils', () => {
 
             test('should return all results when topK is not specified', () => {
                 const embeddingMap = {
-                    'text1': [0.5, 0.3, 0.8],
-                    'text2': [0.65, 0.4, 0.7],
-                    'text3': [0.4, 0.6, 0.2],
-                    'text4': [0.1, 0.9, 0.5]
+                    text1: [0.5, 0.3, 0.8],
+                    text2: [0.65, 0.4, 0.7],
+                    text3: [0.4, 0.6, 0.2],
+                    text4: [0.1, 0.9, 0.5]
                 };
                 const queryEmbedding = [0.6, 0.4, 0.7];
                 const searchConfig = {};

@@ -1,7 +1,6 @@
-
 /**
  * @typedef {Array<number>} EmbeddingVector
- * @param {EmbeddingVector} queryEmbedding 
+ * @param {EmbeddingVector} queryEmbedding
  * @param {EmbeddingVector} embedding
  * @returns {number}
  */
@@ -10,7 +9,7 @@ export function calculateCosineSimilarity(queryEmbedding, embedding) {
     let dotProduct = 0;
     let queryMagnitude = 0;
     let embeddingMagnitude = 0;
-    let queryEmbeddingLength = queryEmbedding.length
+    const queryEmbeddingLength = queryEmbedding.length;
     for (let i = 0; i < queryEmbeddingLength; i++) {
         dotProduct += queryEmbedding[i] * embedding[i];
         queryMagnitude += queryEmbedding[i] ** 2;
@@ -20,12 +19,12 @@ export function calculateCosineSimilarity(queryEmbedding, embedding) {
 }
 
 /**
- * @param {EmbeddingVector} queryEmbedding 
- * @param {EmbeddingMap} embeddingMap 
- * @param {SearchConfig} searchConfig 
+ * @param {EmbeddingVector} queryEmbedding
+ * @param {EmbeddingMap} embeddingMap
+ * @param {SearchConfig} searchConfig
  * @returns {Array<SearchResult>}
  */
-export function getSimilarK(queryEmbedding, embeddingMap, searchConfig = {} ) {
+export function getSimilarK(queryEmbedding, embeddingMap, searchConfig = {}) {
     /** @type Array<SearchResult> */
     const results = [];
     Object.keys(embeddingMap).forEach((key) => {
@@ -33,9 +32,9 @@ export function getSimilarK(queryEmbedding, embeddingMap, searchConfig = {} ) {
         const similarity = calculateCosineSimilarity(queryEmbedding, textEmbedding);
         results.push({
             text: key,
-            score: similarity,
+            score: similarity
         });
-    }); 
+    });
 
     results.sort((a, b) => b.score - a.score);
     const { topK } = searchConfig;

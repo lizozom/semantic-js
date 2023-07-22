@@ -35,9 +35,9 @@ export class IEmbedder {
 
     /**
      * @abstract
-     * @param {EmbeddingVector} queryEmbedding 
-     * @param {EmbeddingMap} embeddingMap 
-     * @param {SearchConfig} [searchConfig] 
+     * @param {EmbeddingVector} queryEmbedding
+     * @param {EmbeddingMap} embeddingMap
+     * @param {SearchConfig} [searchConfig]
      * @returns {Promise<Array<SearchResult>>}
      */
     async search(queryEmbedding, embeddingMap, searchConfig) {
@@ -46,7 +46,7 @@ export class IEmbedder {
 
     /**
      * @abstract
-     * @param {string} text 
+     * @param {string} text
      * @returns {Promise<Array<string>>}
      */
     async tokenize(text) {

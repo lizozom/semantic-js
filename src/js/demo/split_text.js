@@ -1,5 +1,5 @@
 /**
- * @param {string} text 
+ * @param {string} text
  * @returns {Promise<Array<string> | null>}
  */
 export async function splitText(text) {
@@ -7,8 +7,8 @@ export async function splitText(text) {
 }
 
 /**
- * 
- * @param {string} text 
+ *
+ * @param {string} text
  * @returns {Array<string>}
  */
 function splitBySentences(text) {

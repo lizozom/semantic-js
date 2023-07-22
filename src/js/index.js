@@ -1,4 +1,5 @@
 import { wrap, proxy } from 'comlink';
+// eslint-disable-next-line no-unused-vars
 import { IEmbedder } from './iembedder';
 
 /**
@@ -34,31 +35,31 @@ export function getEmbedder() {
 export async function init(modelConfig = { modelName: 'Xenova/all-MiniLM-L6-v2' }, progressCb) {
     console.log(`init: ${modelConfig.modelName}`);
     // @ts-ignore
-    embedder =  await new Embedder();
+    embedder = await new Embedder();
     const proxiedProgressCb = progressCb ? proxy(progressCb) : undefined;
-        
+
     await getEmbedder().loadModel(modelConfig, proxiedProgressCb);
 }
 
 /**
  * Embed the content using the semantic model.
- * @param {string} content - The content to be embedded 
+ * @param {string} content - The content to be embedded
  * @param {EmbeddingConfig} config - The configuration object for embedding.
  * @returns {Promise<EmbeddingVector>} A promise that resolves to a mapping of embedded content.
  */
 export async function embed(content, config = { pooling: 'mean', normalize: true }) {
-    console.log(`embed: length ${content.length}`)    
+    console.log(`embed: length ${content.length}`);
     return getEmbedder().embed(content, config);
 }
 
 /**
  * Embed the content using the semantic model.
- * @param {Array<string>} content - The content to be embedded 
+ * @param {Array<string>} content - The content to be embedded
  * @param {EmbeddingConfig} config - The configuration object for embedding.
  * @returns {Promise<EmbeddingMap>} A promise that resolves to a mapping of embedded content.
  */
 export async function embedContent(content, config = { pooling: 'mean', normalize: true }) {
-    console.log(`embedContent: length ${content.length}`)
+    console.log(`embedContent: length ${content.length}`);
     return getEmbedder().embedBatch(content, config);
 }
 
@@ -70,7 +71,7 @@ export async function embedContent(content, config = { pooling: 'mean', normaliz
  * @returns {Promise<Array<SearchResult>>} A promise that resolves to an array of search results.
  */
 export async function search(query, embeddingMap, config = { pooling: 'mean', normalize: true }) {
-    console.log(`search: ${query}`)
+    console.log(`search: ${query}`);
     const queryEmbedding = await embed(query, config);
     return getEmbedder().search(queryEmbedding, embeddingMap);
 }
@@ -81,6 +82,6 @@ export async function search(query, embeddingMap, config = { pooling: 'mean', no
  * @returns {Promise<Array<string>>} A promise that resolves to an array of tokens.
  */
 export async function tokenize(text) {
-    console.log(`tokenize: ${text}`)
+    console.log(`tokenize: ${text}`);
     return getEmbedder().tokenize(text);
 }
