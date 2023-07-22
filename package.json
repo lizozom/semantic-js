@@ -4,10 +4,17 @@
   "description": "Hassle free Semantic Search on any webpage",
   "main": "src/js/index.js",
   "scripts": {
+    "lint": "eslint  --fix src",
     "test": "jest",
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "build-dev": "webpack --mode development"
+    "build-dev": "webpack --mode development",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "author": "",
   "license": "ISC",
